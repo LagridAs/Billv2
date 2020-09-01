@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap4 django_tables2 crispy_forms_tags %}
+{% block content%}
+  <h2 class="text-center">Facture N° {{ facture.id }}</h2>
+  <p class="text-center"> Client: {{ facture.client }} </p>
+  <br><br>
+    <hr>
+
+    <div class="container">
+  <!-- on affiche un bouton pour ajouter une ligne facture -->
+      <a href="{% url 'facture_table_create' facture_pk=facture.id %}" class="btn btn-primary">Ajouter Ligne</a>
+      <br><br>
+      <!-- on affiche les lignes de la facture -->
+        {% render_table table %}
+    </div>
+{% endblock %}

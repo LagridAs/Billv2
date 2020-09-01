@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Facturation </title>
+    {% load bootstrap4 django_tables2 crispy_forms_tags %}
+	{% bootstrap_css %}         {# Embed Bootstrap CSS #}
+	{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script>
+			//$(document).ready(function(){
+			//	$("#ajouter").click(function(){
+			//		$("#ajouter").hide();
+			//	});
+			//	});
+		</script>
+  </head>
+  <style type="text/css">
+  	#sidebar {
+		  
+    	border-right: 1px solid gray;
+	}
+
+	a{
+		color: black;
+		text-decoration: none;
+		}
+
+	.maincontent {
+		margin-left: 200px;
+		padding: 0px 16px;
+	}
+
+	h2.a {
+  		line-height: 0.01;
+	}
+	h1.a {
+  		line-height: 0.01;
+	}
+  </style>
+ <body>
+	<div class="container-fluid">
+
+		{% block navbar %}
+			{% include  './navbar.html' %}
+		{% endblock %}
+		<br><br>
+
+		<!--<header class="row">
+				<img src="../media/banniere.png" alt="banniere" width="100%" height = "150px"/>
+		</header>-->
+		<br>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>
+                    Bienvenue <strong>{{ user }}</strong>
+                </p>
+            </div>
+        </div>
+
+		<div class="row">
+						
+			<div id="sidebar-wrapper" class="col-lg-2">
+				<div id="sidebar">
+				{% block sidebar %}
+                    {% if user.groups.all.0.name == "Admin" %}
+					    {% include  './navsidebarAdmin.html' %}
+                    {% elif user.groups.all.0.name == "Client" %}
+					    {% include  './navsidebarClient.html' %}
+                    {% endif %}
+				{% endblock %}
+					</div>
+				</div>
+			<section class="col-lg-10 pull-right">
+				{% if messages %}
+					{% for message in messages %}
+						<div class="alert alert-{{message.tags}}">
+								<strong>{{ message }}</strong>
+						</div>
+					{% endfor %}
+				{% endif %}        
+				{% block content %}
+					
+				{% endblock %}
+			</section>
+		</div>
+		<br><br><br><br>
+		<footer class="row"><small><small>
+			<div class="fixed-bottom text-center text-white bg-dark col-lg-12">
+				<address>
+						<strong>Entreprise de Vente En-ligne de Produits IT</strong>
+				</address>
+			</div>
+		</small></small></footer>
+		
+		</div>
+    {% block js_scripts %}
+
+    {% endblock %}
+	</body>
+</html>
+
